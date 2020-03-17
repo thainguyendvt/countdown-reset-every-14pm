@@ -1,0 +1,67 @@
+<div class="announcement announcement--top" style="background-color: {{section.settings.bg_announcement_top}};">
+  <div class="announcement__language"><span class="flag">{%include 'icon-flag'%}</span></div>
+  <div class="announcement__countdown">
+  {% assign time = "now" | date: "%H" %}
+  {% assign time = time | plus : 0 %}
+  {% assign day = "now" |  date: "%a" %}
+  {% if day == 'Mon' or day == 'Tue' or day == 'Wed' or day == 'Thu' or day == 'Fri' %}
+
+  <div id="timer_product" class="timer_product">{{section.settings.announcement_countdown_title}}: <span id="demo">2h 19m 20s</span></div>
+
+  {% endif %}
+  </div>
+</div>
+{% if day == 'Mon' or day == 'Tue' or day == 'Wed' or day == 'Thu' or day == 'Fri' %}
+{% if time >= 0 and time <=24 %}
+{% assign time = "now" | date: "%b %d" %}
+{% assign year = "now" | date: "%y" %}
+<script> 
+    // Set the date we're counting down to
+    var time = '{{ time }}, 20{{ year }} 00:00:01'
+    var countDownDate = new Date(time).getTime();
+
+    var countDownDate = countDownDate + 50400000;
+  var countDownNextDate = new Date(time).getTime() + 50400000;
+    var x = setInterval(function() {
+      var event = new Date();
+      var cur_lon_time =  event.toLocaleString('en-GB', { timeZone: 'Europe/Stockholm' }); 
+      var cur_lon_time = cur_lon_time.split(",");
+      var fisrt = cur_lon_time[0].split("/");
+      var data_date = fisrt[2]+ '-'+fisrt[1] + '-'+fisrt[0]; 
+      var cur_lon_time = data_date + cur_lon_time[1];
+      
+       
+      var ffdata = cur_lon_time.replace(/-/g, '/');
+      var now = new Date(ffdata).getTime();
+      
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      if (distance < 0) {
+       // clearInterval(x);
+       // document.getElementById("timer_product").style.display = 'none';
+              var days = Math.floor((1000 * 60 * 60 * 24) + distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(((1000 * 60 * 60 * 24) / (1000 * 60 * 60)) + (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor(((1000 * 60 * 60) / (1000 * 60)) + (distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((1000 * 60) / 1000 + (distance % (1000 * 60)) / 1000 );
+         document.getElementById("demo").innerHTML = hours + "h " + minutes + "m " + seconds + "s";
+      }else{
+        //document.getElementById("timer_product").style.display = 'block';
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("demo").innerHTML = hours + "h " + minutes + "m " + seconds + "s";
+      }
+     
+    }, 1000);
+
+</script>
+{% endif %}
+{% endif %}
+
